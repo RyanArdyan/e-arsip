@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // buat table kantor
-        Schema::create('kantor', function (Blueprint $table) {
+        // Agar dokumen tidak tercampur, sebaiknya dikategorikan (misal: Laporan Keuangan, Surat Jalan, Absensi).
+        Schema::create('kategori_dokumen', function (Blueprint $table) {
             // The bigIncrements method creates an auto-incrementing UNSIGNED BIGINT (primary key) equivalent column
-            $table->bigIncrements('kantor_id');
-            // contoh: Kantor Cabang A
+            $table->bigIncrements('kategori_dokumen_id');
             $table->string('nama');
-            $table->text('alamat');
-            // enum adalah tipe yg value nya di sediakan
-            $table->enum('tipe', ['pusat', 'cabang']);
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kantor');
+        Schema::dropIfExists('kategori_dokumen');
     }
 };
