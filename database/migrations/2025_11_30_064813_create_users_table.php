@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('peran', ['admin', 'staff']);
             // Lokasi file gambar tanda tangan admin (misal: `signatures/admin_budi.png`
-            $table->varchar('jalur_gambar_tanda_tangan')->nullable();
+            $table->string('jalur_gambar_tanda_tangan')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
