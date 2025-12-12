@@ -24,7 +24,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('peran', ['admin', 'staff']);
+            // 1. super_admin → admin kantor pusat → bisa CRUD kantor, user, kategori dokumen, dll
+            // 2. admin → admin kantor cabang → hanya bisa mengelola user & dokumen di cabangnya sendiri
+            // 3. staff → hanya upload & melihat dokumen miliknya
+            // Kalau hanya pakai role admin, semua admin cabang bisa CRUD kantor → berbahaya.
+            $table->enum('peran', ['super_admin', 'admin', 'staff']);
             // Lokasi file gambar tanda tangan admin (misal: `signatures/admin_budi.png`
             $table->string('jalur_gambar_tanda_tangan')->nullable();
             $table->rememberToken();

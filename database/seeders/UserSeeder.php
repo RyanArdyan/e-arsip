@@ -21,8 +21,8 @@ class UserSeeder extends Seeder
             'kantor_id' => 1,
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => 'admin123',
-            'peran' => 'admin'
+            'password' => Hash::make('admin123'),
+            'peran' => 'super_admin'
         ]);
     }
 }
