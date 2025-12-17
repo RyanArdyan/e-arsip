@@ -30,8 +30,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [UserController::class, 'edit_profile'])->name('profile.edit');
     // rute tipe perbarui, jika user diarahkan ke url berikut maka ke controller dan method berikut, name nya adalah sebagai berikut
     Route::put('/profile/update', [UserController::class, 'update_profile'])->name('profile.update');
-
-
 });
 
 // Rute yang HANYA boleh diakses oleh Super Admin

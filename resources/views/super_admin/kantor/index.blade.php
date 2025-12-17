@@ -15,12 +15,12 @@
                 <div class="row">
                     <div class="col-sm-12">
                         {{-- jika ada sesi sukses yang dikimkan controller maka --}}
-                        @if (@session('success'))
+                        @if (session('success'))
                             <div class="alert alert-primary" role="alert">
                                 {{-- cetak sesi sukses --}}
                                 {{ session('success') }}
                             </div>
-                            @endsession
+                        @endif
                     </div>
                     <div class="col-sm-6">
                         <h3 class="mb-0">Daftar Kantor</h3>
@@ -48,6 +48,8 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+                                <a href="/manajemen/kantor/create" class="btn btn-sm btn-success mb-2">Tambah Kantor</a>
+
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
