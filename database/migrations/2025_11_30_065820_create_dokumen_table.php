@@ -30,6 +30,11 @@ return new class extends Migration
             // kunci asing adalah column kategori_dokumen_id, referensi nya adalah column kategori_dokumen_id di table kategori_dokumen
             $table->foreign('kategori_dokumen_id')->references('kategori_dokumen_id')->on('kategori_dokumen');
 
+            // membuat foreign key
+            $table->unsignedBigInteger('tanda_tangan_yg_menyetujui_id');
+            // kunci asing adalah column tanda_tangan_yg_menyetujui_id, referensi nya adalah column tanda_tangan_yg_menyetujui_id di table kategori_dokumen
+            $table->foreign('tanda_tangan_yg_menyetujui_id')->references('user_id')->on('users' );
+
             $table->string('judul_dokumen');
             // file asli yang di upload kantor cabang (polos)
             $table->string('jalur_file_asli');
@@ -44,6 +49,13 @@ return new class extends Migration
             $table->unsignedBigInteger('disetujui_oleh');
             // kunci asing nya adalah column disetujui_oleh, referensi nya adalah column user_id di table users
             $table->foreign('disetujui_oleh')->references('user_id')->on('users');
+
+            // Sangat disarankan. Berguna untuk memastikan integritas dokumen. Jika dokumen aslinya diubah setelah diunggah, hash-nya akan berbeda.
+            $table->char('hash_dokumen_asli', length: 64);
+
+            // Sangat disarankan. Digunakan saat pemindaian QR Code untuk memverifikasi bahwa file yang diakses sama persis dengan file yang tervalidasi di sistem.
+            $table->char('hash_dokumen_ditandatangan', length: 64)->nullable();
+
             // contoh: 2025-12-30 20:00:00
             $table->timestamp('disetujui_pada');
             $table->timestamps();

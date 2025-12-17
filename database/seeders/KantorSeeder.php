@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 // import database
 use Illuminate\Support\Facades\DB;
+// agar bisa berinteraksi dengan table kantor
+use App\Models\Kantor;
 
 class KantorSeeder extends Seeder
 {
@@ -23,5 +25,9 @@ class KantorSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        // 2. Membuat 15 data kantor lain secara acak menggunakan Factory
+        // Pastikan Anda telah menambahkan 'use HasFactory' di Model Kantor.
+        Kantor::factory()->count(15)->create();
     }
 }

@@ -139,7 +139,7 @@
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <img src="{{ asset('AdminLTE-4/dist') }}/assets/img/user2-160x160.jpg"
                         class="user-image rounded-circle shadow" alt="User Image" />
-                    <span class="d-none d-md-inline">Alexander Pierce</span>
+                    <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
@@ -147,26 +147,24 @@
                         <img src="{{ asset('AdminLTE-4/dist') }}/assets/img/user2-160x160.jpg"
                             class="rounded-circle shadow" alt="User Image" />
                         <p>
-                            Alexander Pierce - Web Developer
-                            <small>Member since Nov. 2023</small>
+                            {{-- {{ auth()->user()->name }} berarti cetak detail data baris user yang login, column name --}}
+                            {{-- {{ Auth::user()->peran_formatted }} berarti panggil data detail baris user yang login, lalu panggil models/users, method getPeranFormattedAttribute --}}
+                            {{ auth()->user()->name }} - {{ Auth::user()->peran_formatted }}
                         </p>
-                    </li>
-                    <!--end::User Image-->
-                    <!--begin::Menu Body-->
-                    <li class="user-body">
-                        <!--begin::Row-->
-                        <div class="row">
-                            <div class="col-4 text-center"><a href="#">Followers</a></div>
-                            <div class="col-4 text-center"><a href="#">Sales</a></div>
-                            <div class="col-4 text-center"><a href="#">Friends</a></div>
-                        </div>
-                        <!--end::Row-->
                     </li>
                     <!--end::Menu Body-->
                     <!--begin::Menu Footer-->
                     <li class="user-footer">
                         <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        <a href="/logout" class="btn btn-default btn-flat float-end">Sign out</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+
+                        <a href="#" class="btn btn-default btn-flat float-end"
+                        {{-- ketika di click maka cegah reload lalu panggil #logout-form lalu kirim --}}
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Sign out
+                        </a>
                     </li>
                     <!--end::Menu Footer-->
                 </ul>

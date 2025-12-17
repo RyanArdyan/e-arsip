@@ -3,7 +3,7 @@
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>E-Arsip - BKK</title>
+    <title>Sistem Pengelola Dokumen</title>
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="color-scheme" content="light dark" />
@@ -60,7 +60,7 @@
   <body class="login-page bg-body-secondary">
     <div class="login-box">
       <div class="login-logo">
-        <a href="#"><b>BKK</b> & E-Arsip</a>
+        <a href="#"><b>Pengelola Dokumen</b></a>
       </div>
       <!-- /.login-logo -->
       <div class="card">

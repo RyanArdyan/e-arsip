@@ -41,4 +41,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getPeranFormattedAttribute()
+    {
+        // uckata2x ganti '_' jadi spasi pada value column peran
+        return ucwords(str_replace('_', ' ', $this->peran));
+    }
 }

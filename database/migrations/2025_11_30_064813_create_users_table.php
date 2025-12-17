@@ -30,7 +30,7 @@ return new class extends Migration
             // Kalau hanya pakai role admin, semua admin cabang bisa CRUD kantor → berbahaya.
             $table->enum('peran', ['super_admin', 'admin', 'staff']);
             // Lokasi file gambar tanda tangan admin (misal: `signatures/admin_budi.png`
-            $table->string('jalur_gambar_tanda_tangan')->nullable();
+            $table->string('tanda_tangan')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
