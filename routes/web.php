@@ -50,6 +50,8 @@ Route::prefix('manajemen')->name('manajemen.')->middleware(['auth'])->group(func
         Route::get('/kantor/edit/{kantor_id}', [KantorController::class, 'edit'])->name('kantor.edit');
         // rute tipe perbarui, jika user diarahkan ke url berikut maka ke controller dan method berikut, name nya adalah sebagai berikut
         Route::put('/kantor/update/{kantor_id}', [KantorController::class, 'update'])->name('kantor.update');
+        // rute tipe hapus, jika user diarahkan ke url berikut maka kirimkan kantor_id ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::delete('/kantor/delete/{kantor_id}', [KantorController::class, 'destroy'])->name('kantor.destroy');
     });
 
     // Gunakan Gate 'isAdmin' (Admin Cabang & Super Admin)

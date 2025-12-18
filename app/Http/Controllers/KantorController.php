@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Kantor;
 use App\Http\Requests\StoreKantorRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class KantorController extends Controller
 {
@@ -61,6 +62,44 @@ class KantorController extends Controller
             // Jika gagal, kembali ke halaman sebelumnya dengan pesan error
             return back()->withInput() // Menjaga agar input user tidak hilang
                      ->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
+    }
+
+    // parameter $kantor_id akan menerima kantor_id dari url atau rute
+    public function destroy($kantor_id)
+    {
+        // jika yang login adalah detail user, column peran nya tidak sama dengan super_admin
+        if (Auth::user()->peran !== 'super_admin') {
+            // kembali ke url sebelumnya lalu kirimkan pesan error menggunakan sesi flash
+            return back()->with('error', 'Anda tidak memiliki akses untuk menghapus kantor.');
+        }
+
+        // 2. Cari data kantor
+        // Fungsi ini akan menghitung secara otomatis berapa banyak jumlah User dan Dokumen yang terhubung ke kantor tersebut tanpa harus mengambil sem ua datanya. Ini sangat efisien bagi performa server.
+        $kantor = Kantor::withCount(['users', 'dokumen'])->findOrFail($kantor_id);
+
+        // 3. Cek apakah kantor masih memiliki User atau Dokumen
+        // withCount akan menghasilkan atribut users_count dan dokumen_count
+        if ($kantor->users_count > 0 || $kantor->dokumen_count > 0) {
+            return back()->with('error', "Gagal menghapus! Kantor ini masih memiliki {$kantor->users_count} User dan {$kantor->dokumen_count} Dokumen. Hapus atau pindahkan data tersebut terlebih dahulu.");
+        }
+
+        // coba untuk menghapus kantor
+        try {
+            // detail kantor dihapus
+            $kantor->delete();
+
+            // kembali alihkan ke rute manajemen.kantor.index dengan pesan sukses
+            return redirect()->route('manajemen.kantor.index')
+                            ->with('success', 'Kantor berhasil dihapus.');
+
+        }
+        // jika terjadi error di block try maka akan ditangani di block catch
+        catch (\Exception $e) {
+            // Mencatat error teknis ke storage/logs/laravel.log
+            \Log::error("Gagal hapus kantor ID {$kantor_id}: " . $e->getMessage());
+
+            return back()->with('error', 'Terjadi kesalahan sistem saat mencoba menghapus data.');
         }
     }
 }

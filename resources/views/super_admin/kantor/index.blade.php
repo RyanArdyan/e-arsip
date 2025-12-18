@@ -21,6 +21,14 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+
+                        {{-- jika ada sesi error yang dikimkan controller maka --}}
+                        @if (session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{-- cetak sesi sukses --}}
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="col-sm-6">
                         <h3 class="mb-0">Daftar Kantor</h3>
@@ -68,7 +76,16 @@
                                                 <td>
                                                     <a href="/manajemen/kantor/detail/{{ $kantor->kantor_id }}" class="badge text-bg-primary">Detail</a>
                                                     <a href="" class="badge text-bg-warning">Edit</a>
-                                                    <a href="" class="badge text-bg-danger">Hapus</a>
+
+                                                    {{-- ketika dikirim maka panggil konfirmasi penghapusan menggunakan javascript --}}
+                                                    {{-- panggil rute berikut, lalu kirimkan kantor_id --}}
+                                                    <form onsubmit="return confirm('Apakah anda yakin ingin menghapus kantor ini?')" action="{{ route('manajemen.kantor.destroy', $kantor->kantor_id) }}" method="POST" class="d-inline">
+                                                        {{-- agar aman dari serangan csrf --}}
+                                                        @csrf
+                                                        {{-- pake rute dengan method DELETE --}}
+                                                        @method('DELETE')
+                                                        <button type="submit" class="badge text-bg-danger border-0">Hapus</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
