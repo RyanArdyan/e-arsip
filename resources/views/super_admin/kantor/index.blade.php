@@ -75,7 +75,7 @@
                                                 <td>{{ $kantor->nama }}</td>
                                                 <td>
                                                     <a href="/manajemen/kantor/detail/{{ $kantor->kantor_id }}" class="badge text-bg-primary">Detail</a>
-                                                    <a href="" class="badge text-bg-warning">Edit</a>
+                                                    <a href="/manajemen/kantor/edit/{{ $kantor->kantor_id }}" class="badge text-bg-warning">Edit</a>
 
                                                     {{-- ketika dikirim maka panggil konfirmasi penghapusan menggunakan javascript --}}
                                                     {{-- panggil rute berikut, lalu kirimkan kantor_id --}}

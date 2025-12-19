@@ -102,4 +102,42 @@ class KantorController extends Controller
             return back()->with('error', 'Terjadi kesalahan sistem saat mencoba menghapus data.');
         }
     }
+
+    // parameter $kantor_id akan menerima kantor_id dari url atau rute
+    public function edit($kantor_id)
+    {
+        // berisi panggil kantor lalu cari detail kantor berdasarkan kantor_id atau tampilkan error 404 jika tidak ditemukan
+        $detail_kantor = Kantor::findOrFail($kantor_id);
+        // kembalikkan ke tampilan kantor.edit dengan mengirimkan data detail_kantor
+        return view('super_admin.kantor.edit', [
+            // berisi kunci detail_kantor yang berisi data dari variabel $detail_kantor
+            'detail_kantor' => $detail_kantor
+        ]);
+    }
+
+    // request berisi data yang dikirimkan dari form edit kantor
+    // parameter $kantor_id akan menerima kantor_id dari url atau rute
+    public function update(Request $request, $kantor_id)
+    {
+        // lakukan validasi pada data yang dikirimkan dari form edit kantor
+        $request->validate([
+            // column nama harus diisi, bertipe string, dan maksimal 255 karakter
+            'nama'   => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'tipe'   => 'required|in:pusat,cabang',
+        ]);
+
+        // berisi mengambil detail data kantor berdasarkan kantor_id, jika gagal maka tampilkan error 404
+        $kantor = Kantor::findOrFail($kantor_id);
+        // detail kantor di perbarui
+        $kantor->update([
+            // column nama diisi dengan data dari input name="nama"
+            'nama'   => $request->nama,
+            'alamat' => $request->alamat,
+            'tipe'   => $request->tipe,
+        ]);
+
+        // kembali alihkan ke url berikut lallu kirimkan pesan sukses menggunakan sesi flash
+        return redirect('/manajemen/kantor')->with('success', 'Data kantor berhasil diperbarui!');
+    }
 }
