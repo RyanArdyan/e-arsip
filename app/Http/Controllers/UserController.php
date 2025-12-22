@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 // untuk meng-hash password
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {

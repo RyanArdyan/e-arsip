@@ -16,6 +16,7 @@ return new class extends Migration
             // The bigIncrements method creates an auto-incrementing UNSIGNED BIGINT (primary key) equivalent column
             $table->bigIncrements('kategori_dokumen_id');
             $table->string('nama');
+            $table->enum('jenis', ['Teknis', 'Keuangan', 'Kepegawaian', 'Umum']);
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KantorController;
+use App\Http\Controllers\KategoriDokumenController;
 
 // login
 // jika user di url awal maka ke controller dan method berikut, name nya adalah sebagai berikut
@@ -52,6 +53,21 @@ Route::prefix('manajemen')->name('manajemen.')->middleware(['auth'])->group(func
         Route::put('/kantor/update/{kantor_id}', [KantorController::class, 'update'])->name('kantor.update');
         // rute tipe hapus, jika user diarahkan ke url berikut maka kirimkan kantor_id ke controller dan method berikut, name nya adalah sebagai berikut
         Route::delete('/kantor/delete/{kantor_id}', [KantorController::class, 'destroy'])->name('kantor.destroy');
+
+        // jika user di url /kategori maka ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::get('/kategori', [KategoriDokumenController::class, 'index'])->name('kategori.index');
+        // jika user di url berikut maka kirimkan /{kategori_id} lalu ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::get('/kategori/detail/{kategori_id}', [KategoriDokumenController::class, 'detail'])->name('kategori.detail');
+        // jika user di url /kategori/create maka ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::get('/kategori/create', [KategoriDokumenController::class, 'create'])->name('kategori.create');
+        // rute tipe store, jika user diarahkan ke url berikut maka ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::post('/kategori/store', [KategoriDokumenController::class, 'store'])->name('kategori.store');
+        // jika user di url manajemen/kategori/edit/{kategori_id} maka ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::get('/kategori/edit/{kategori_id}', [KategoriDokumenController::class, 'edit'])->name('kategori.edit');
+        // rute tipe perbarui, jika user diarahkan ke url berikut maka ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::put('/kategori/update/{kategori_id}', [KategoriDokumenController::class, 'update'])->name('kategori.update');
+        // rute tipe hapus, jika user diarahkan ke url berikut maka kirimkan kategori_id ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::delete('/kategori/delete/{kategori_id}', [KategoriDokumenController::class, 'destroy'])->name('kategori.destroy');
     });
 
     // Gunakan Gate 'isAdmin' (Admin Cabang & Super Admin)
