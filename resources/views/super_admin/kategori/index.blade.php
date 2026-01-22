@@ -93,6 +93,7 @@
                                 </table>
 
                                 <div class="d-flex justify-content-center mt-3">
+                                    {{-- cetak paginasi --}}
                                     {{ $semua_kategori->links() }}
                                 </div>
                             </div>

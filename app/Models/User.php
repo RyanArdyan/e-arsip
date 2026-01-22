@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Kantor;
 
 class User extends Authenticatable
 {
@@ -46,5 +49,64 @@ class User extends Authenticatable
     {
         // uckata2x ganti '_' jadi spasi pada value column peran
         return ucwords(str_replace('_', ' ', $this->peran));
+    }
+
+
+    /**
+     * Relasi ke Tabel Kantor.
+     * Setiap User bernaung di bawah satu Kantor.
+     */
+    public function kantor(): BelongsTo
+    {
+        // foreign_key (kantor_id): Ini adalah kolom yang ada di tabel saat ini (tabel users). Ini adalah kolom yang "menyimpan" ID dari kantor.
+        // owner_key (kantor_id): Ini adalah kolom referensi di tabel target (tabel kantor). Biasanya ini adalah Primary Key dari tabel tujuan. 
+        return $this->belongsTo(Kantor::class, 'kantor_id', 'kantor_id');
+    }
+
+    /**
+     * Relasi ke Tabel Dokumen (sebagai pengunggah).
+     */
+    public function dokumen(): HasMany
+    {
+        return $this->hasMany(Dokumen::class, 'user_id', 'user_id');
+    }
+
+    /**
+     * Relasi ke Tabel Dokumen (sebagai penyetuju/penandatangan).
+     */
+    public function dokumenDisetujui(): HasMany
+    {
+        return $this->hasMany(Dokumen::class, 'disetujui_oleh', 'user_id');
+    }
+
+    // =========================================================================
+    // HELPER METHODS & SCOPES
+    // =========================================================================
+
+    /**
+     * Cek apakah user adalah Super Admin.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->peran === 'super_admin';
+    }
+
+    /**
+     * Scope untuk mempermudah filter berdasarkan peran di Controller.
+     * Contoh penggunaan: User::role('staff')->get();
+     */
+    public function scopeRole($query, $role)
+    {
+        return $query->where('peran', $role);
+    }
+
+    /**
+     * Aksesor untuk mendapatkan URL tanda tangan yang valid.
+     */
+    public function getSignatureUrlAttribute()
+    {
+        return $this->jalur_gambar_tanda_tangan
+            ? asset('storage/' . $this->jalur_gambar_tanda_tangan)
+            : asset('images/default-signature.png');
     }
 }

@@ -63,7 +63,7 @@
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th>Nama</th>
-                                            <th style="width: 25%">Aksi</th>
+                                            <th style="width: 30%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -74,6 +74,7 @@
                                                 {{-- cetak value detail kantor, column nama --}}
                                                 <td>{{ $kantor->nama }}</td>
                                                 <td>
+                                                    {{-- cetak panggil rute berikut lalu kirimkan kantor_id --}}
                                                     <a href="/manajemen/kantor/detail/{{ $kantor->kantor_id }}" class="badge text-bg-primary">Detail</a>
                                                     <a href="/manajemen/kantor/edit/{{ $kantor->kantor_id }}" class="badge text-bg-warning">Edit</a>
 

@@ -30,7 +30,16 @@ class DatabaseSeeder extends Seeder
             // panggil KantorSeeder
             KantorSeeder::class,
             // panggil UserSeeder
-            UserSeeder::class
+            UserSeeder::class,
+            // panggil KategoriDokumenSeeder
+            KategoriDokumenSeeder::class,
         ]);
+
+        // Membuat 1 Admin
+        // panggil UserFactory lalu method admin untuk membuat user dengan peran admin
+        User::factory()->admin()->create();
+
+        // Membuat 15 Staff
+        User::factory(15)->staff()->create();
     }
 }

@@ -273,6 +273,7 @@
         sparkline3.render();
     </script>
 
+    {{-- untuk menangkap value yang dikirimkan @push('scripts') --}}
     @stack('scripts')
     <!--end::Script-->
 </body>

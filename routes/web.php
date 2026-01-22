@@ -7,6 +7,7 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KantorController;
 use App\Http\Controllers\KategoriDokumenController;
+use App\Http\Controllers\PegawaiController;
 
 // login
 // jika user di url awal maka ke controller dan method berikut, name nya adalah sebagai berikut
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile/update', [UserController::class, 'update_profile'])->name('profile.update');
 });
 
+
 // Rute yang HANYA boleh diakses oleh Super Admin
 // prefix manajamen berarti setiap url akan diawali oleh /manajemen
 // name manajemen. berarti setiap name rute akan diawali oleh manajemen.
@@ -53,6 +55,16 @@ Route::prefix('manajemen')->name('manajemen.')->middleware(['auth'])->group(func
         Route::put('/kantor/update/{kantor_id}', [KantorController::class, 'update'])->name('kantor.update');
         // rute tipe hapus, jika user diarahkan ke url berikut maka kirimkan kantor_id ke controller dan method berikut, name nya adalah sebagai berikut
         Route::delete('/kantor/delete/{kantor_id}', [KantorController::class, 'destroy'])->name('kantor.destroy');
+
+
+        // rute tipe dapatkan, jika user diarahkan ke url berikut maka ke controller dan method berikut, name nya adalah sebagai berikut
+        Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
+        // Route untuk halaman create dengan parameter ID kantor opsional (?)
+        Route::get('/pegawai/create/{kantor_id?}', [PegawaiController::class, 'create'])->name('pegawai.create');
+        // jika user di url berikut maka kirimkan kantor_id, lalu ke controller berikut, method berikut, name nya adalah sebagai berikut
+        Route::get('/pegawai/edit/{kantor_id}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
+        Route::post('/pegawai', [PegawaiController::class, 'store'])->name('pegawai.store');
+
 
         // jika user di url /kategori maka ke controller dan method berikut, name nya adalah sebagai berikut
         Route::get('/kategori', [KategoriDokumenController::class, 'index'])->name('kategori.index');
@@ -75,5 +87,3 @@ Route::prefix('manajemen')->name('manajemen.')->middleware(['auth'])->group(func
         // CRUD User, Persetujuan Dokumen, dll.
     });
 });
-
-

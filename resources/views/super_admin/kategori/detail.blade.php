@@ -1,8 +1,8 @@
 {{-- @memperluas parent nya yaitu views/layouts/app --}}
 @extends('layouts.app')
 
-{{-- mengirimkan value 'Detail Kantor' ke @yield milik parent --}}
-@section('title', 'Detail Kantor')
+{{-- mengirimkan value 'Detail kategori' ke @yield milik parent --}}
+@section('title', 'Detail Kategori')
 
 {{-- mengirimkan value main ke @yield('main') milik parent --}}
 @section('main')
@@ -14,11 +14,11 @@
                 <!--begin::Row-->
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3 class="mb-0">Detail Kantor</h3>
+                        <h3 class="mb-0">Detail Kategori</h3>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
-                            <li class="breadcrumb-item active" aria-current="page">Detail Kantor</li>
+                            <li class="breadcrumb-item active" aria-current="page">Detail kategori</li>
                         </ol>
                     </div>
                 </div>
@@ -35,13 +35,16 @@
                     <div class="col-md-12">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Nama Kantor: {{ $detail_kantor->nama }}</h3>
+                                {{-- cetak value detail_kategori, column nama --}}
+                                <h3 class="card-title">Nama kategori: {{ $detail_kategori->nama }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <p>Alamat: {{ $detail_kantor->alamat }}</p>
-                                <p>Tipe: {{ $detail_kantor->tipe }}</p>
-                                <a href="/manajemen/kantor" class="btn btn-sm btn-danger">Kembali</a>
+                                <p>Jenis: {{ $detail_kategori->jenis }}</p>
+                                <hr>
+
+                                <p>Deskripsi: {{ $detail_kategori->deskripsi }}</p>
+                                <a href="/manajemen/kategori" class="btn btn-sm btn-danger">Kembali</a>
                             </div>
                         </div>
                     </div>

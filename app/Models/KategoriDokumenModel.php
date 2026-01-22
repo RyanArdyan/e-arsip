@@ -17,11 +17,11 @@ class KategoriDokumenModel extends Model
     protected $guarded = [];
 
     /**
-     * Relasi ke tabel Users
+     * Relasi ke tabel dokumen
      * Ditambahkan parameter kedua: 'kategori_dokumen_id' (Foreign Key di tabel dokumen)
      * Ditambahkan parameter ketiga: 'kategori_dokumen_id' (Primary Key di tabel kategori_dokumen)
      */
     public function dokumen() {
-        return $this->hasMany(User::class, 'kategori_dokumen_id', 'kategori_dokumen_id');
+        return $this->hasMany(Dokumen::class, 'kategori_dokumen_id', 'kategori_dokumen_id');
     }
 }
